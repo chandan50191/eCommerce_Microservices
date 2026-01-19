@@ -15,7 +15,7 @@ public static class DependencyInjection
         // Note: The this keyword tells C#: that “This method extends IServiceCollection”
         // TODO: Add Services to IoC container
         // Infrastructure services often include data access, caching and other low-level components
-        services.AddSingleton<IUsersRepository, UsersRepository>();
+        services.AddTransient<IUsersRepository, UsersRepository>();
         return services;
     }
 }
