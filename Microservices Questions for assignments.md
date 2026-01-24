@@ -1,33 +1,36 @@
 # Questions for assignment : 5
 
 1. What is Clean Architecture, and how does it help maintainability in large-scale systems?
-Ans1. => a. Clean Architecture is a way of structuring your solution so that business logic is independent of frameworks, databases, UI, and external services.
-b. Clean Architecture in .NET separates business logic from frameworks using inward dependencies, which improves maintainability, testability, and scalability in large systems.
-c. Clean Architecture Improves Maintainability by protecting business logic like Framework changes don’t break core logic, Migrate from EF Core → Dapper → MongoDB (possible), Web API → gRPC → Background worker (possible).
-d. Clean Architecture Easier to Modify & Extend, we can add New features = new use cases also Existing logic remains untouched.
+- Ans1. => 
+- Clean Architecture is a way of structuring your solution so that business logic is independent of frameworks, databases, UI, and external services.
+- Clean Architecture in .NET separates business logic from frameworks using inward dependencies, which improves maintainability, testability, and scalability in large systems.
+- Clean Architecture Improves Maintainability by protecting business logic like Framework changes don’t break core logic, Migrate from EF Core → Dapper → MongoDB (possible), Web API → gRPC → Background worker (possible).
+- Clean Architecture Easier to Modify & Extend, we can add New features = new use cases also Existing logic remains untouched.
 
 2. What are the four layers in Clean Architecture, and how are dependencies managed between them?
-Ans2. =>  a.The Four Layers of Clean Architecture are Domain,Application,Infrastructure and Presentation layer.
-b. Domain Layer (Core / Enterprise Business Rules) contains Entities, Value objects, Domain Services, Business rules & invariants and It does not depend on any frameworks or libraries.
-c. Application Layer contains Use cases like Commands / Queries, Application services, Interfaces (repositories, unit of work) and DTOs. It depends on domail layer only. 
-d. Infrastructure Layer contains EF Core / Dapper, Database context, Repository implementations, Email, file system, cache, external APIs.It depends on Application layer, Domain layer.
-f. Presentation Layer contains ASP.NET Core controllers, gRPC endpoints, MVC / Razor / Blazor UI, Request/response models. It depends on Application layer only.
+- Ans2. =>  
+- The Four Layers of Clean Architecture are Domain,Application,Infrastructure and Presentation layer.
+- Domain Layer (Core / Enterprise Business Rules) contains Entities, Value objects, Domain Services, Business rules & invariants and It does not depend on any frameworks or libraries.
+- Application Layer contains Use cases like Commands / Queries, Application services, Interfaces (repositories, unit of work) and DTOs. It depends on domail layer only. 
+- Infrastructure Layer contains EF Core / Dapper, Database context, Repository implementations, Email, file system, cache, external APIs.It depends on Application layer, Domain layer.
+- Presentation Layer contains ASP.NET Core controllers, gRPC endpoints, MVC / Razor / Blazor UI, Request/response models. It depends on Application layer only.
 
 3. What are the benefits of using the Repository pattern in a Clean Architecture?
-Ans3. => The Repository pattern in Clean Architecture decouples business logic from data access, enforces dependency inversion, improves testability, and allows infrastructure to change without impacting core logic.
+- Ans3. => The Repository pattern in Clean Architecture decouples business logic from data access, enforces dependency inversion, improves testability, and allows infrastructure to change without impacting core logic.
 
 4. How does the Repository pattern enhance testability in a .NET Core application?
-Ans4. => The Repository pattern enhances testability by abstracting data access behind interfaces, allowing business logic to be unit tested using mocks or in-memory implementations without relying on databases or EF Core.
+- Ans4. => The Repository pattern enhances testability by abstracting data access behind interfaces, allowing business logic to be unit tested using mocks or in-memory implementations without relying on databases or EF Core.
 
 5. What is Postman, and how is it used in API testing?
-Ans5 => Postman is a popular tool used to test and interact with APIs. It allows developers to send HTTP requests (GET, POST, PUT, DELETE) and view responses easily. Postman is used to validate API functionality, test request headers, parameters, authentication, and response data. It also supports automated tests, environment variables, and collections, making API development, debugging, and testing faster and more reliable.
+- Ans5 => Postman is a popular tool used to test and interact with APIs. It allows developers to send HTTP requests (GET, POST, PUT, DELETE) and view responses easily. Postman is used to validate API functionality, test request headers, parameters, authentication, and response data. It also supports automated tests, environment variables, and collections, making API development, debugging, and testing faster and more reliable.
 
 6. Explain the role of AutoMapper in an ASP.NET Core project.
-Ans6. => AutoMapper is a library used in ASP.NET Core to automatically map data between objects, such as Domain models, DTOs, and ViewModels. It reduces repetitive manual mapping code, improves readability, and ensures consistent data transformation across the application. AutoMapper helps keep controllers and services clean by separating mapping logic from business logic.
+- Ans6. => AutoMapper is a library used in ASP.NET Core to automatically map data between objects, such as Domain models, DTOs, and ViewModels. It reduces repetitive manual mapping code, improves readability, and ensures consistent data transformation across the application. AutoMapper helps keep controllers and services clean by separating mapping logic from business logic.
 
 7. How would you configure and use AutoMapper in ASP.NET Core?
-And7. => a. dotnet add package AutoMapper.Extensions.Microsoft.DependencyInjection
-b. Create a mapping profile
+And7. => 
+- dotnet add package AutoMapper.Extensions.Microsoft.DependencyInjection
+- Create a mapping profile
 ```c#
 public class UserProfile : Profile
 {
@@ -37,11 +40,11 @@ public class UserProfile : Profile
     }
 }
 ```
-c. Register AutoMapper in Program.cs
+- Register AutoMapper in Program.cs
 ```C#
     builder.Services.AddAutoMapper(typeof(UserProfile));
 ```
-d. Use AutoMapper via DI
+- Use AutoMapper via DI
 ```C#
     public class UsersController
 {
@@ -59,19 +62,19 @@ d. Use AutoMapper via DI
 
 8. How can you connect to a Postgres database using Dapper in ASP.NET Core?
 Ans8. => 
-a. Install packages
+- Install packages
 ```C#
     dotnet add package Dapper
     dotnet add package Npgsql
 ```
-a. Add connection string in appsettings.json
+- Add connection string in appsettings.json
 ```C#
     "ConnectionStrings": {
         "DefaultConnection": "Host=localhost;Port=5432;Database=MyDb;Username=postgres;Password=pass"
     }
 
 ```
-a. Create a connection
+- Create a connection
 ```C#
     using Npgsql;
     using System.Data;
@@ -79,7 +82,7 @@ a. Create a connection
     IDbConnection db = new NpgsqlConnection(
         builder.Configuration.GetConnectionString("DefaultConnection"));
 ```
-a. Use Dapper
+- Use Dapper
 ```C#
     var users = await db.QueryAsync<User>(
     "SELECT * FROM users WHERE is_active = true");
@@ -95,12 +98,12 @@ It maps the result set to objects of type T and returns them as a collection.
 10. What is FluentValidation, and how does it integrate with ASP.NET Core?
 Ans10. => FluentValidation is a popular .NET library used to define validation rules using a fluent, strongly-typed API instead of data annotations. It keeps validation logic clean, testable, and separate from models.
 Steps to integrate 
-1. Install packages:
+- Install packages:
 ```C#
     dotnet add package FluentValidation
     dotnet add package FluentValidation.AspNetCore
 ```
-2. Create a validator:
+- Create a validator:
 ```C#
     public class UserValidator : AbstractValidator<UserDto>
     {
@@ -110,12 +113,12 @@ Steps to integrate
         }
     }
 ```
-3. Register FluentValidation:
+- Register FluentValidation:
 ```C#
     builder.Services.AddValidatorsFromAssemblyContaining<UserValidator>();
 ```
 11. How do you create a custom validator using FluentValidation?
-1. Create a validator class by inheriting from AbstractValidator<T>:
+- Create a validator class by inheriting from AbstractValidator<T>:
 ```c#
 public class UserValidator : AbstractValidator<UserDto>
 {
@@ -130,7 +133,7 @@ public class UserValidator : AbstractValidator<UserDto>
     }
 }
 ```
-2. Register the validator:
+- Register the validator:
 ```js
     builder.Services.AddValidatorsFromAssemblyContaining<UserValidator>();
 
@@ -139,13 +142,13 @@ public class UserValidator : AbstractValidator<UserDto>
 
 12. What are some common use cases for FluentValidation in an ASP.NET Core project?
 Common use cases for FluentValidation in an ASP.NET Core project include:
-1. Validating API request DTOs (required fields, formats, ranges)
-2. Enforcing business rules (age limits, password strength, uniqueness checks)
-3. Replacing Data Annotations for cleaner, testable validation logic
-4. Validating command/query models in CQRS
-5. Centralizing validation instead of duplicating checks in controllers
-6. Providing consistent validation error responses across APIs
-7. FluentValidation keeps validation logic readable, reusable, and easy to maintain.
+- Validating API request DTOs (required fields, formats, ranges)
+- Enforcing business rules (age limits, password strength, uniqueness checks)
+- Replacing Data Annotations for cleaner, testable validation logic
+- Validating command/query models in CQRS
+- Centralizing validation instead of duplicating checks in controllers
+- Providing consistent validation error responses across APIs
+- FluentValidation keeps validation logic readable, reusable, and easy to maintain.
 
 13. What are some basic Git commands every developer should know?
 Some basic Git commands every developer should know are:
